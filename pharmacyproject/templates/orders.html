@@ -1,0 +1,174 @@
+{% extends "base.html" %} 
+{% block title %} 
+Order-Products/Medicines 
+{% endblock title %} 
+{% block body %}
+
+
+<div class="row">
+
+  <div class="col-md-4">
+    
+<div class="container mt-2">
+  <h2 class="display-4">10% Discount</h2>
+  {% include "messages.html" %}  
+  <div class="card bg-light p-4">
+    <div class="card-body">
+      <form action="orders" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control mb-3"
+            placeholder="Enter Your Name"
+            value="{{user.first_name}} {{user.last_name}}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="form-control mb-3"
+            value="{{user.username}}"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="items">Select Medicines/Products</label>
+            <select id="items" class="form-control" name="items">
+              <option selected>Choose...</option>
+
+          
+              {% for i in mymed %}
+              <option value="{{i.medicine_name}}">{{i.medicine_name}}</option>
+              {% endfor %}
+              {% for j in myprod %}
+              <option value="{{j.prod_name}}">{{j.prod_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity?</label>
+            <select id="quantity" class="form-control" name="quantity">
+              <option selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+         
+
+        
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="num">Phone Number</label>
+            <input
+              type="tel"
+              id="num"
+              name="num"
+              class="form-control mb-3"
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+           
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea
+              type="text"
+              id="address"
+              name="address"
+              class="form-control mb-3"
+           
+              required
+            /></textarea>
+          </div>
+
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label mb-2" for="exampleCheck1">I Accept cash on delivery method</label>
+          </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-dark" type="submit">Place Order</button>
+          </div>
+
+
+
+
+
+
+
+      </form>
+    </div>
+  </div>
+  
+</div>
+
+  </div>
+  <div class="col-md-8">
+
+    <div class="container mt-2">
+      <h2 class="display-4">Orders</h2>
+
+      <table class="table table-danger table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Products</th>
+            <th scope="col">Price</th>
+            <th scope="col">Cancel</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+
+          {% for item in items %}
+          <tr>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.items}}</td>
+            <td>{{item.price}} </td>
+           {% if item.delivery %}
+           <td><button type="button" class="btn-success p-2"  href="/orders/{{item.id}}" disabled> <i class="fa-solid fa-trash-can"></i></button></td>
+           
+           {% else %}
+           <td><a type="button" class="btn-danger p-2" href="/orders/{{item.id}}"> <i class="fa-solid fa-trash-can"></i></a></td>
+           {% endif %}
+
+
+            {% if item.delivery %}
+            <td><i class="fa-solid fa-circle-check"></i> Delivered</td>
+            {% else %}
+            <td> <i class="fa-solid fa-truck"></i> Not Delivered</td>
+            {% endif %}
+            
+          
+          </tr>
+          
+          {% endfor %}
+         
+        </tbody>
+      </table>
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
