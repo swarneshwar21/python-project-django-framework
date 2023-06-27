@@ -3,10 +3,15 @@ pharmacy management system using django framework with administration database
 ## python project using the django framework 
 
 ##This project contains administration where admin can handle the updation of products and medicines
+
 #runcommand
+
 python manage.py runserver 
+
 create a multiple admin 
+
 python manage.py createsuperuser
+
 ## login interface
 ![Screenshot (10)](https://github.com/swarneshwar21/python-project/assets/125119221/0d66ff9f-bdfe-4d65-87d2-59cf9cb846d1)
 ## home page 
